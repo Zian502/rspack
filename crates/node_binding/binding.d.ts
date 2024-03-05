@@ -154,7 +154,8 @@ export enum BuiltinPluginName {
   SwcJsMinimizerRspackPlugin = 'SwcJsMinimizerRspackPlugin',
   SwcCssMinimizerRspackPlugin = 'SwcCssMinimizerRspackPlugin',
   BundlerInfoRspackPlugin = 'BundlerInfoRspackPlugin',
-  JsLoaderRspackPlugin = 'JsLoaderRspackPlugin'
+  JsLoaderRspackPlugin = 'JsLoaderRspackPlugin',
+  LazyCompilationPlugin = 'LazyCompilationPlugin'
 }
 
 export function cleanupGlobalTrace(): void
@@ -885,6 +886,14 @@ export interface RawJavascriptParserOptions {
   url: string
 }
 
+export interface RawLazyCompilationOption {
+  module: (err: Error | null, arg: RawModuleArg) => any
+  test?: RawRegexMatcher
+  entries: boolean
+  imports: boolean
+  cacheable: boolean
+}
+
 export interface RawLibraryAuxiliaryComment {
   root?: string
   commonjs?: string
@@ -920,6 +929,11 @@ export interface RawLimitChunkCountPluginOptions {
   maxChunks: number
 }
 
+export interface RawModuleArg {
+  module: string
+  path: string
+}
+
 export interface RawModuleFilenameTemplateFnCtx {
   identifier: string
   shortIdentifier: string
@@ -932,6 +946,12 @@ export interface RawModuleFilenameTemplateFnCtx {
   moduleId: string
   hash: string
   namespace: string
+}
+
+export interface RawModuleInfo {
+  active: boolean
+  client: string
+  data: string
 }
 
 export interface RawModuleOptions {
